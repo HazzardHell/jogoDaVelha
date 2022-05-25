@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+//Bibliotecas
+using System;
 using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace jogoDaVelha
 {
     class jogoDaVelha
     {
+        //Algumas variaveis
         private bool fimDeJogo;
         private char[] posicoes;
         private char vez;
@@ -27,6 +26,10 @@ namespace jogoDaVelha
 
         public void iniciar()
         {
+            //Isso aqui é o jogo rodando
+            //Vou rodar numa estrutura WHILE até que uma condição para fechar o sistema aconteça
+
+            //Uma interação simples
             Enunciado();
             
             while (!fimDeJogo)
@@ -59,35 +62,34 @@ namespace jogoDaVelha
 
         }
 
-        private static int GetExitCode()
-        {
-            return Environment.ExitCode;
-        }
-
+        //para alternar o input
         private void MudarVez()
-        {
+        {            
             vez = vez == 'x' ? 'O' : 'x';
         }
 
+        //A partir da terceira jogada é possível validar se há vencedores
         private void VerificarFimdejogo()
         {
+            //Contados de rodadas
             if (qtdpreenchida < 3)
                 return;
-
+            //Verifica se alguma condição de vitoria foi atingida
             if (vitoriaDiagonal() || vitoriaHorizontal() || vitoriaVertical())
             {
                 fimDeJogo = true;
                 Console.WriteLine($"Fim de jogo!!! Vitoria de {vez}");
                 return;
             }
-
-            if(qtdpreenchida is 9)
+            //Verifica se o jogo chegou ao limite de preenchimento
+            if (qtdpreenchida is 9)
             {
                 fimDeJogo = true;
                 Console.WriteLine($"Fim de jogo!!! Empate!");
             }
         }
-
+        //Condições de vitoria:
+        //Vitoria em linhas
         private bool vitoriaHorizontal()
         {
             bool linha1 = posicoes[0] == posicoes[1] && posicoes[0] == posicoes[2];
@@ -96,7 +98,7 @@ namespace jogoDaVelha
 
             return linha1 || linha2 || linha3;
         }
-
+        //Vitoria em colunas
         private bool vitoriaVertical()
         {
             bool coluna1 = posicoes[0] == posicoes[3] && posicoes[0] == posicoes[6];
@@ -106,7 +108,7 @@ namespace jogoDaVelha
             return coluna1 || coluna2 || coluna3;
 
         }
-
+        //Vitoria em X
         private bool vitoriaDiagonal()
         {
             bool diagonal1 = posicoes[0] == posicoes[4] && posicoes[0] == posicoes[8];
@@ -115,7 +117,8 @@ namespace jogoDaVelha
             return diagonal1 || diagonal2;
 
         }
-
+        //Esse metodo vai servir para ler input de tela do usuário e validar se está dentro do range permitido
+        // e também chama outro metodo que valida se o campo escolhido já não foi preenchido
         private void lerEscolhaDoUsuario()
         {
             bool conversao = int.TryParse(s:Console.ReadLine(), out int posicaoEscolhida);
@@ -129,7 +132,7 @@ namespace jogoDaVelha
             atualizarJogo(posicaoEscolhida);
 
         }
-
+        //Esse metodo atualiza a tabela do jogo de acordo com a jogada
         private void atualizarJogo( int posicaoEscolhida)
         {
             int indice = posicaoEscolhida - 1;
@@ -139,13 +142,14 @@ namespace jogoDaVelha
 
 
         }
-
+        //Isso aqui valida que o local aonde foi selecionada não esteja com valor "o" ou "x" voltando um true or false para o metodo lerEscolhaUsuario
         private bool ValidarEscolhaUsuario(int posicaoEscolhida)
         {
             int indice = posicaoEscolhida - 1;
             return posicoes[indice] != 'o' && posicoes[indice] != 'x';
         }
-
+        //Esse metodo abaixo, acho que é autoexplicativo
+        //mas se não for, ele renderiza a tabela no console
         private void RenderizarTabela()
         {
             Console.Clear();
@@ -155,6 +159,7 @@ namespace jogoDaVelha
 
         private string ObterTabela()
         {
+            //contrução da tabela
             return $"\n" +
                    $"           __{posicoes[0]}__|__{posicoes[1]}__|__{posicoes[2]}__\n" +
                    $"           __{posicoes[3]}__|__{posicoes[4]}__|__{posicoes[5]}__\n" +
