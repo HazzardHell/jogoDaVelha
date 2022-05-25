@@ -6,7 +6,7 @@
 ############################################################################################################
 
 ####Controles####
-Digitar um valor de 1 a 9 para acusar o campo a ser preenchido, o jogo sempre começa pelo "O" e alterna sozinho para "X" e vice versa a cada rodada.
+Digitar um valor de 1 a 9 para acusar o campo a ser preenchido, o jogo sempre começa pelo "X" e alterna sozinho para "O" e vice versa a cada rodada.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ####Regras básicas de jogo da velha####
