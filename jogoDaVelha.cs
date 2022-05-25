@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace jogoDaVelha
@@ -12,7 +13,8 @@ namespace jogoDaVelha
         private char[] posicoes;
         private char vez;
         private int qtdpreenchida;
-        private char enunciado;
+        private string start;
+        private int atraso;
 
         public jogoDaVelha()
         {
@@ -20,10 +22,12 @@ namespace jogoDaVelha
             posicoes = new[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
             vez = 'x';
             qtdpreenchida = 0;
+            atraso = 2000;
         }
 
         public void iniciar()
         {
+            Enunciado();
             
             while (!fimDeJogo)
             {                
@@ -38,7 +42,26 @@ namespace jogoDaVelha
 
         private void Enunciado()
         {
-            Console.WriteLine($"Olá! digite um valor de 0 a 9 para podermos começar o jogo!");
+            Console.WriteLine($"Olá! Bem vindo ao Jogo da velha!\n\nSó um minuto para eu achar aqui a tabela do jogo...");
+            Thread.Sleep(atraso);
+            Console.Clear();
+            Thread.Sleep(atraso);
+            Console.WriteLine($"Espero que goste de jogos no console.");
+            Thread.Sleep(atraso);
+            Console.Clear();
+            Console.WriteLine($"Espero que goste de jogos no console..");
+            Thread.Sleep(atraso);
+            Console.Clear();
+            Console.WriteLine($"Espero que goste de jogos no console...");
+            Thread.Sleep(atraso);
+            Console.WriteLine($"Certo!\n Carregando jogo...");
+            Thread.Sleep(atraso);
+
+        }
+
+        private static int GetExitCode()
+        {
+            return Environment.ExitCode;
         }
 
         private void MudarVez()
@@ -97,7 +120,7 @@ namespace jogoDaVelha
         {
             bool conversao = int.TryParse(s:Console.ReadLine(), out int posicaoEscolhida);
 
-            while (!conversao || !ValidarEscolhaUsuario(posicaoEscolhida))
+            while (posicaoEscolhida > 9 || posicaoEscolhida < 1|| !conversao || !ValidarEscolhaUsuario(posicaoEscolhida) )
             {
                 Console.WriteLine("O campo escolhido é invalido! Por favor escolha um valor de  1 a 9 que esteja disponível na tabela");
                 conversao = int.TryParse(s: Console.ReadLine(), out posicaoEscolhida);
@@ -126,7 +149,7 @@ namespace jogoDaVelha
         private void RenderizarTabela()
         {
             Console.Clear();
-            Enunciado();
+            Console.WriteLine($"Digite um valor de 1 a 9 para preencher um campo:");
             Console.WriteLine(ObterTabela());
         }
 
